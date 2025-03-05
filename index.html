@@ -32,8 +32,8 @@
         }
 
         .toDoList-input {
-            width: 400px;
             height: 40px;
+            width: 100%;
             padding: 10px;
 
             display: flex;
@@ -45,8 +45,8 @@
         }
 
         .toDoList-input > input {
-            height: 50%;
-            font-size: .9rem;
+            height: 70%;
+            font-size: 1rem;
             margin:5px;
         }
 
@@ -74,7 +74,7 @@
         }
 
         table {
-            width: 422px;
+            width: 100%;
             margin-top: -.5px;
             border-collapse: collapse;
             font-size: .9rem;
@@ -84,8 +84,6 @@
             padding: 10px;
         }
         tr{
-            /* border: 1px solid steelblue; */
-            background-color: #7e80813d;
             border: 1px solid #7e80813d;
         }
         tr:hover {
@@ -109,6 +107,29 @@
             body {
                 height: 80vh;
             }
+
+            .toDoList-input {
+                height: 80px;
+                display: grid;
+                grid-template-rows: auto auto;
+                grid-template-columns: auto auto;
+                grid-template-areas: 
+                    't1 t1' 
+                    't2 t3';
+            }
+
+            #task {
+                grid-area: t1;
+            }
+
+            #dueDate {
+                grid-area: t2;
+            }
+
+            .sub-btn {
+                grid-area: t3;
+            }
+
         }
 
     </style>
@@ -121,7 +142,7 @@
             <input type="date" id="dueDate" required/>
             <button onclick="addDoList()" class="sub-btn">Submit</button>
         </div>
-        <div id="tasks">
+        <div id="tasks" style="width: 100%; padding: 10px; background-color: #7e80813d;">
         </div>
     </div>
 
