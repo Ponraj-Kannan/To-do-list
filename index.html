@@ -195,7 +195,7 @@
 
             for(let i = 1; i < n; i++){
                 const {task, dueDate} = toDoList[i]
-                const finalTask = (task.length > 20) ? task.substring(0, 15)+"..." : task
+                const finalTask = (task.length > 15) ? task.substring(0, 15)+"..." : task
                 HtmlElement += `
                     <tr>
                         <td style="width: 55%;">
