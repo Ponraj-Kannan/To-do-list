@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@300;400;500&display=swap');
+        body {
+            padding: 0;
+            margin: 0;
+            
+            width: 100%;
+            height: 100vh;
+            background-color: #121212;
+            color: #ffffff;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .toDoList-container {
+            min-width: 40%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px;
+            padding-bottom: 20px;
+        }
+
+        .toDoList-input {
+            width: 400px;
+            height: 40px;
+            padding: 10px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: #7678edce;
+            border: 1px solid #7678edce;
+        }
+
+        .toDoList-input > input {
+            height: 50%;
+            font-size: .9rem;
+            margin:5px;
+        }
+
+        .del-btn {
+            border: 1px solid #121212;
+            padding: 8px 10px;
+            color: #121212;
+            background-color: #c4c5c56b;
+        }
+
+        .del-btn:hover {
+            background-color: #fb6f92cd;
+        }
+
+        .sub-btn {
+            border: 1px solid #121212;
+            padding: 8px 10px;
+            color: #121212;
+            background-color: #c4c5c580;
+        }
+
+        .sub-btn:hover {
+            color: #121212;
+            background-color: #e89f4bce;
+        }
+
+        table {
+            width: 422px;
+            margin-top: -.5px;
+            border-collapse: collapse;
+            font-size: .9rem;
+        }
+        td {
+            text-align: center;
+            padding: 10px;
+        }
+        tr{
+            /* border: 1px solid steelblue; */
+            background-color: #7e80813d;
+            border: 1px solid #7e80813d;
+        }
+        tr:hover {
+            background-color: #7e80815d;
+        }
+
+        .poppins-regular {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .poppins-medium {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 1.5rem;
+        }
+
+        @media only screen and (max-width: 400px) {
+            body {
+                height: 80vh;
+            }
+        }
+
+    </style>
+</head>
+<body class="poppins-regular">
+    <div class="toDoList-container">
+        <h3 class="poppins-medium" style="color: #7678ed;">To Do List</h3>
+        <div class="toDoList-input">
+            <input type="text" id="task" placeholder="Add task" required/>
+            <input type="date" id="dueDate" required/>
+            <button onclick="addDoList()" class="sub-btn">Submit</button>
+        </div>
+        <div id="tasks">
+        </div>
+    </div>
+
+    <script>
+
+        let toDoList = (!localStorage.getItem('list')) ? [{
+            task: '',
+            dueDate: ''
+        }] : JSON.parse(localStorage.getItem('list'))
+
+        function addDoList() {
+            const taskElement = document.getElementById('task')
+            const dateElemenet = document.getElementById('dueDate')
+
+            console.log(taskElement.value !== '')
+            console.log(dateElemenet.value !== '')
+
+            if(taskElement.value !== '' && dateElemenet.value !== ''){
+                toDoList.push({
+                    task : taskElement.value,
+                    dueDate : dateElemenet.value
+                })
+            }
+            else {
+                alert('Task or Due date is missing')
+            }
+            taskElement.value = ''
+            dateElemenet.value = ''
+
+            localStorage.setItem('list', JSON.stringify(toDoList))
+            console.log(toDoList)
+            render()
+        }
+
+        function render() {
+            const tasksElement = document.getElementById('tasks')
+            let HtmlElement = `
+                <table>
+                    <tbody>`
+            let n = toDoList.length
+
+            for(let i = 1; i < n; i++){
+                const {task, dueDate} = toDoList[i]
+                const finalTask = (task.length > 20) ? task.substring(0, 20) : task
+                HtmlElement += `
+                    <tr>
+                        <td>
+                            ${finalTask}
+                        </td>
+                        <td>
+                            ${dueDate}
+                        </td>
+                        <td>
+                            <button onclick="
+                                toDoList.splice(${i}, ${1});
+                                console.log(toDoList)
+                                render();" class="del-btn">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>`
+            }
+
+            HtmlElement += `
+                    <tbody>
+                </table>
+            `
+
+            console.log(HtmlElement)
+            tasksElement.innerHTML = HtmlElement
+        }
+
+        render()
+    </script>
+</body>
+</html>
