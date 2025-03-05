@@ -81,10 +81,11 @@
         }
         td {
             text-align: center;
-            padding: 10px;
+            padding: 8px;
+            width: auto;
         }
         tr{
-            border: 1px solid #7e80813d;
+            border: 1px solid #7e80813d; 
         }
         tr:hover {
             background-color: #7e80815d;
@@ -106,6 +107,7 @@
         @media only screen and (max-width: 400px) {
             body {
                 height: 80vh;
+                font-size: .8rem;
             }
             
             .toDoList-container {
@@ -146,8 +148,11 @@
             <input type="date" id="dueDate" required/>
             <button onclick="addDoList()" class="sub-btn">Submit</button>
         </div>
+        <td style="width: 10%;"></td>
         <div id="tasks" style="width: 100%; padding: 10px; background-color: #7e80813d;">
+            
         </div>
+        
     </div>
 
     <script>
@@ -190,22 +195,20 @@
 
             for(let i = 1; i < n; i++){
                 const {task, dueDate} = toDoList[i]
-                const finalTask = (task.length > 20) ? task.substring(0, 20) : task
+                const finalTask = (task.length > 20) ? task.substring(0, 15)+"..." : task
                 HtmlElement += `
                     <tr>
-                        <td>
+                        <td style="width: 55%;">
                             ${finalTask}
                         </td>
-                        <td>
+                        <td style="width: 40%; ">
                             ${dueDate}
                         </td>
-                        <td>
-                            <button onclick="
+                        <td style="width: 5%;">
+                            <img src="./assets/icons8-trash-can-48.png" width="20px" src onclick="
                                 toDoList.splice(${i}, ${1});
                                 console.log(toDoList)
-                                render();" class="del-btn">
-                                Delete
-                            </button>
+                                render();"/>
                         </td>
                     </tr>`
             }
